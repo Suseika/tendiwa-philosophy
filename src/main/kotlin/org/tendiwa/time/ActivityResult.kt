@@ -5,6 +5,4 @@ package org.tendiwa.time
  */
 class ActivityResult(
     val influence: () -> Unit
-) {
-
-}
+)

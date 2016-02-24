@@ -1,19 +1,16 @@
 package org.tendiwa.exampleOntology
 
-import org.tendiwa.time.Activity
-import org.tendiwa.time.ActivityProcess
-import org.tendiwa.time.ActivityResult
-import org.tendiwa.time.Actor
+import org.tendiwa.time.*
 
-class Dog : Actor() {
+class Dog : Actor {
     override fun act(): Activity =
         Activity(
             listOf(
                 ActivityProcess(
-                    1.0,
+                    2,
                     ActivityResult { println("Dog barks") }
-                )
-            ),
-            cooldown = 0.5
+                ),
+                Cooldown(1)
+            )
         )
 }
