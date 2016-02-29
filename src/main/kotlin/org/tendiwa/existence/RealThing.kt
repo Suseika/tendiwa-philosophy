@@ -2,8 +2,22 @@ package org.tendiwa.existence
 
 import java.util.*
 
-abstract class RealThing {
-    private val _aspects: MutableMap<AspectKind, Aspect> = LinkedHashMap()
+/**
+ * An interactive thing in simulation characterized by a number of its
+ * [Aspects][Aspect];
+ *
+ * Aspects and archetypes completely define what the thing is and what it does.
+ */
+abstract class RealThing(
+    aspects: List<Aspect> = emptyList()
+) {
+    private val _aspects: MutableMap<AspectKind, Aspect> =
+        LinkedHashMap<AspectKind, Aspect>()
+            .apply {
+                for (aspect in aspects) {
+                    put(aspect.kind, aspect)
+                }
+            }
 
     val aspects: Map<AspectKind, Aspect> get() = _aspects
 
@@ -14,4 +28,7 @@ abstract class RealThing {
     fun removeAspect(kind: AspectKind) {
         _aspects.remove(kind)
     }
+
+    fun hasAspect(aspectKind: AspectKind): Boolean =
+        aspects.containsKey(aspectKind)
 }

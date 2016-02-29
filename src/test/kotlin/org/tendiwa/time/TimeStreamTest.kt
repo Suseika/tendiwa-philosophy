@@ -8,22 +8,24 @@ import kotlin.test.assertEquals
 class TimeStreamTest {
     @Test
     fun `new actor acts when added`() {
-        val actor = mock(Actor::class.java)
+        val context = 1
+        val actor : Actor<Int> = (mock(Actor::class.java) as Actor<Int>)
             .apply {
-                `when`(act())
+                `when`(act(context))
                     .then { Activity(listOf(Cooldown(1))) }
             }
-        TimeStream(listOf())
+        TimeStream(context, listOf())
             .apply { addActor(actor) }
-        verify(actor, times(1)).act()
+        verify(actor, times(1)).act(context)
     }
 
     @Test
     fun play() {
+        val context = 1
         var resultCalled = false
-        val actor = mock(Actor::class.java)
+        val actor = (mock(Actor::class.java) as Actor<Int>)
             .apply {
-                `when`(act())
+                `when`(act(context))
                     .then {
                         Activity(
                             listOf(
@@ -37,16 +39,17 @@ class TimeStreamTest {
                         )
                     }
             }
-        TimeStream(listOf(actor))
+        TimeStream(context, listOf(actor))
             .apply { play() }
         assert(resultCalled)
     }
 
     @Test
     fun `activity registered earlier produces result earlier if multiple activities end at the same moment`() {
+        val context = 1
         val animals = ArrayList<String>()
-        val catActor = object : Actor {
-            override fun act(): Activity {
+        val catActor = object : Actor<Int> {
+            override fun act(context: Int): Activity {
                 return Activity(
                     listOf(
                         ActivityProcess(2, ActivityResult {
@@ -56,8 +59,8 @@ class TimeStreamTest {
                 )
             }
         }
-        val dogActor = object : Actor {
-            override fun act(): Activity {
+        val dogActor = object : Actor<Int> {
+            override fun act(context: Int): Activity {
                 return Activity(
                     listOf(
                         ActivityProcess(2, ActivityResult {
@@ -67,7 +70,7 @@ class TimeStreamTest {
                 )
             }
         }
-        TimeStream(listOf())
+        TimeStream(context, listOf())
             .apply {
                 addActor(dogActor)
                 addActor(catActor)

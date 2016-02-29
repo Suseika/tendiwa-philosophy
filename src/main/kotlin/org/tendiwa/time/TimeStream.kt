@@ -6,8 +6,11 @@ import java.util.*
  * Maintains the chronological order of concurrent actions of multiple
  * [Actors][Actor].
  */
-class TimeStream(actors: List<Actor>) {
-    private val actorsToTodoqueues: MutableMap<Actor, Todoqueue> =
+class TimeStream<Context>(
+    private val context: Context,
+    actors: List<Actor<Context>>
+) {
+    private val actorsToTodoqueues: MutableMap<Actor<Context>, Todoqueue> =
         LinkedHashMap()
 
     init {
@@ -16,7 +19,7 @@ class TimeStream(actors: List<Actor>) {
         }
     }
 
-    fun addActor(actor: Actor) {
+    fun addActor(actor: Actor<Context>) {
         if (actorsToTodoqueues.containsKey(actor)) {
             throw IllegalArgumentException(
                 "Actor $actor is already in this TimeStream"
@@ -51,7 +54,7 @@ class TimeStream(actors: List<Actor>) {
      * Replaces the current activity of [actor] with a new activity chosen
      * with [Actor.act].
      */
-    fun interruptActivity(actor: Actor) {
+    fun interruptActivity(actor: Actor<Context>) {
         if (actorsToTodoqueues.containsKey(actor)) {
             throw IllegalArgumentException(
                 "Actor $actor doesn't have any current activity in this TimeStream"
@@ -63,10 +66,10 @@ class TimeStream(actors: List<Actor>) {
     /**
      * Puts the next [Activity] of an [Actor] to the schedule at current moment.
      */
-    private fun scheduleNextActionOf(actor: Actor) {
+    private fun scheduleNextActionOf(actor: Actor<Context>) {
         actorsToTodoqueues.put(
             actor,
-            Todoqueue(actor.act().processes)
+            Todoqueue(actor.act(context).processes)
         )
     }
 }

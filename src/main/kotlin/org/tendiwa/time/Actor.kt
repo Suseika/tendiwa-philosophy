@@ -1,5 +1,5 @@
 package org.tendiwa.time
 
-interface Actor {
-    fun act(): Activity
+interface Actor<Context> {
+    fun act(context: Context): Activity
 }
