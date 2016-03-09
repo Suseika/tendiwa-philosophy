@@ -3,7 +3,6 @@ package org.tendiwa.exampleOntology
 import org.tendiwa.existence.Aspect
 import org.tendiwa.existence.NoStimuliAspectKind
 import org.tendiwa.stimuli.Stimulus
-import org.tendiwa.stimuli.StimulusKind
 import org.tendiwa.stimuli.StimulusMedium
 
 class Sanity() : Aspect(kind) {
@@ -30,9 +29,5 @@ class Sanity() : Aspect(kind) {
         }
     }
 
-    class Change(val old: Double, val new: Double) : Stimulus(kind) {
-        companion object {
-            val kind = StimulusKind("sanity change")
-        }
-    }
+    class Change(val old: Double, val new: Double) : Stimulus
 }

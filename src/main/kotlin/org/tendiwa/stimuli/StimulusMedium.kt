@@ -8,15 +8,15 @@ import java.util.*
  */
 class StimulusMedium {
     private val subscriptions
-        : MutableMap<StimulusKind, MutableCollection<Aspect>> =
+        : MutableMap<Class<out Stimulus>, MutableCollection<Aspect>> =
         LinkedHashMap()
 
     private val providerOfSets = { LinkedHashSet<Aspect>() }
     private val omnisubscribers: MutableList<(Stimulus) -> Unit> = ArrayList()
 
-    fun subscribe(subscriber: Aspect, stimulusKind: StimulusKind) {
+    fun subscribe(subscriber: Aspect, kind: Class<out Stimulus>) {
         subscriptions
-            .getOrPut(stimulusKind, providerOfSets)
+            .getOrPut(kind, providerOfSets)
             .add(subscriber)
     }
 
@@ -28,7 +28,7 @@ class StimulusMedium {
         omnisubscribers
             .forEach { it(stimulus) }
         subscriptions
-            .getOrPut(stimulus.kind, providerOfSets)
+            .getOrPut(stimulus.javaClass, providerOfSets)
             .forEach { it.reaction(this, stimulus) }
     }
 }

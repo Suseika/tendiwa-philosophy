@@ -1,7 +1,7 @@
 package org.tendiwa.existence
 
-import org.tendiwa.stimuli.StimulusKind
+import org.tendiwa.stimuli.Stimulus
 
-class AspectKind(val stimuli: List<StimulusKind>)
+class AspectKind(val stimuli: List<Class<Stimulus>>)
 
 fun NoStimuliAspectKind() = AspectKind(emptyList())

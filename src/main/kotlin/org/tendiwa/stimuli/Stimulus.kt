@@ -1,3 +1,7 @@
 package org.tendiwa.stimuli
 
-open class Stimulus(val kind: StimulusKind)
+/**
+ * Marker interface to mark data classes that are supposed to serve as
+ * stimuli for [Aspect]s.
+ */
+interface Stimulus

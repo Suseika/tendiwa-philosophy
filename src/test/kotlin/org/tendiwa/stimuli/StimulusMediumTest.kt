@@ -10,7 +10,7 @@ class StimulusMediumTest {
         val sanity = Sanity()
         val oldSanityValue = sanity.amount
         StimulusMedium().apply {
-            subscribe(sanity, LightingChange.kind)
+            subscribe(sanity, LightingChange::class.java)
             sendStimulus(LightingChange(1.0, 2.0))
         }
         assert(oldSanityValue != sanity.amount)
