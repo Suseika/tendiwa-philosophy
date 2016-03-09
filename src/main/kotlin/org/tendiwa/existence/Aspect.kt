@@ -3,8 +3,10 @@ package org.tendiwa.existence
 import org.tendiwa.stimuli.Stimulus
 import org.tendiwa.stimuli.StimulusMedium
 
-abstract class Aspect(
-    val kind: AspectKind
-) {
-    abstract fun reaction(medium: StimulusMedium, stimulus: Stimulus)
+interface Aspect {
+    fun reaction(medium: StimulusMedium, stimulus: Stimulus)
+
+    fun init(host: RealThing)
+
+    val stimuli: List<Stimulus>
 }

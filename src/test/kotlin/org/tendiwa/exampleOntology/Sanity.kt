@@ -1,15 +1,11 @@
 package org.tendiwa.exampleOntology
 
-import org.tendiwa.existence.Aspect
-import org.tendiwa.existence.NoStimuliAspectKind
+import org.tendiwa.existence.NoInitAspect
+import org.tendiwa.existence.NoStimuliAspect
 import org.tendiwa.stimuli.Stimulus
 import org.tendiwa.stimuli.StimulusMedium
 
-class Sanity() : Aspect(kind) {
-
-    companion object {
-        private val kind = NoStimuliAspectKind()
-    }
+class Sanity() : NoStimuliAspect, NoInitAspect {
 
     var amount: Double = 1.0
         private set

@@ -11,24 +11,24 @@ import java.util.*
 abstract class RealThing(
     aspects: List<Aspect> = emptyList()
 ) {
-    private val _aspects: MutableMap<AspectKind, Aspect> =
-        LinkedHashMap<AspectKind, Aspect>()
+    private val _aspects: MutableMap<Class<out Aspect>, Aspect> =
+        LinkedHashMap<Class<out Aspect>, Aspect>()
             .apply {
                 for (aspect in aspects) {
-                    put(aspect.kind, aspect)
+                    put(aspect.javaClass, aspect)
                 }
             }
 
-    val aspects: Map<AspectKind, Aspect> get() = _aspects
+    val aspects: Map<Class<out Aspect>, Aspect> get() = _aspects
 
     fun addAspect(aspect: Aspect) {
-        _aspects[aspect.kind] = aspect
+        _aspects[aspect.javaClass] = aspect
     }
 
-    fun removeAspect(kind: AspectKind) {
+    fun removeAspect(kind: Class<Aspect>) {
         _aspects.remove(kind)
     }
 
-    fun hasAspect(aspectKind: AspectKind): Boolean =
+    fun hasAspect(aspectKind: Class<Aspect>): Boolean =
         aspects.containsKey(aspectKind)
 }
