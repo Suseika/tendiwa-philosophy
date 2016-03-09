@@ -23,6 +23,7 @@ abstract class RealThing(
 
     fun addAspect(aspect: Aspect) {
         _aspects[aspect.javaClass] = aspect
+        aspect.init(this)
     }
 
     fun removeAspect(kind: Class<Aspect>) {

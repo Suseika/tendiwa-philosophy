@@ -8,5 +8,5 @@ interface Aspect {
 
     fun init(host: RealThing)
 
-    val stimuli: List<Stimulus>
+    val stimuli: List<Class<out Stimulus>>
 }
